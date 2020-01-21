@@ -11,8 +11,8 @@ namespace Bowerbird
     {
         private CurveOnSurface(Surface surface, Curve curve)
         {
-            Surface = surface;
-            Curve = curve;
+            Surface = surface ?? throw new ArgumentNullException(nameof(surface));
+            Curve = curve ?? throw new ArgumentNullException(nameof(curve));
         }
 
         public static CurveOnSurface Create(Surface surface, Curve curve)
@@ -207,7 +207,14 @@ namespace Bowerbird
 
         public Curve ToCurve(double tolerance)
         {
-            return Surface.Pushup(Curve, tolerance);
+            var curve = Surface.Pushup(Curve, tolerance);
+
+            if (!curve.IsValid)
+                return null;
+
+            return curve;
         }
+
+        public bool IsValid => Curve.IsValid && Surface.IsValid;
     }
 }

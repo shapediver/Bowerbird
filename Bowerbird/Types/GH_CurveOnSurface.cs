@@ -29,7 +29,7 @@ namespace Bowerbird.Types
 
         public Curve Geometry { get; private set; }
 
-        public override bool IsValid => Value != null;
+        public override bool IsValid => Value.IsValid;
 
         public override string TypeName => "BBCurveOnSurface";
 
